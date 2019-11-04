@@ -1,14 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>classful-css</title>
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- google code-prettify -->
+	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/styles/sunburst.css">
+	<!-- jQuery throttle-debounce -->
+	<script src="https://cdn.jsdelivr.net/gh/cowboy/jquery-throttle-debounce/jquery.ba-throttle-debounce.js" defer></script>
+	<!-- sanitize.css -->
+	<link href="https://unpkg.com/sanitize.css" rel="stylesheet">
+	<!-- classful-css -->
 	<script src="classful-css.js" defer></script>
+	<style>
+	.box-shadow {
+		box-shadow: 0 5px 15px rgba(0,0,0,.08);
+	}
+	* {
+		font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+	}
+	h2 {
+		font-weight: 400;
+	}
+	.display-inline-block {
+		display: inline-block;
+	}
+	#classful-css-previewer {
+		min-height: 200px;
+		width: 100%;
+		background-color: #f0f0f0;
+		border: 1px solid #fefefe;
+	}
+	</style>
+	<script>
+		$(document).ready(function(){
+			var classes = "";
+			$.each($("textarea[name='classful-css']"), function(){
+				classes = $(this).val();
+			});
+			$("#classful-css-demo-object").classful(classes);
+			$("input, select, textarea").on( "keyup change", $.debounce(300, function() {
+				var classes = "";
+			    $.each($("textarea[name='classful-css']"), function(){
+			    	classes = $(this).val();
+			    });
+				// alert(JSON.stringify(classes));
+				$("#classful-css-demo-object").classful(classes);
+			}));
+		});
+	</script>
 </head>
-<body class="background-color-blue">
-	<div class="word-wrap-break-word height-40px background-white" data-unclassful></div>
-	<div class="word-wrap-break-word height-40px background-orange"></div>
-	<div class="height-100px background-orange width-40% margin-top-20"></div>
+<body class="background-color-#f8f8f8">
+	<div class="">
+		<div class="height-40"></div>
+		<div class="position-relative box-sizing-border-box background-#fff color-#666 box-shadow overflow-auto margin-auto margin-bottom-40 padding-30px max-width-1200px">
+			<h2 class="font-size-1.8rem line-height-1.3 margin-bottom-20 color-#333 text-transform-none">Installation</h2>
+			<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/gh/BossBele/cropzee@latest/dist/cropzee.js&quot; defer&gt;&lt;/script&gt;</pre>
+		</div>
+		<div class="position-relative box-sizing-border-box background-#fff color-#666 box-shadow overflow-auto margin-auto margin-bottom-40 padding-30px max-width-1200px">
+			<h2 class="font-size-1.8rem line-height-1.3 margin-bottom-20 color-#333 text-transform-none">Usage</h2>
+			<pre class="prettyprint">&lt;div class=&quot;height-40 background-white text-align-center&quot;&gt;Hello&lt;/div&gt;</pre>
+		</div>
+		<div class="position-relative box-sizing-border-box background-#fff color-#666 box-shadow overflow-auto margin-auto margin-bottom-40 padding-30px max-width-1200px">
+			<div class="font-size-0">
+				<div class="display-inline-block font-size-14 vertical-align-top width-50% min-width-400">
+					<div id="classful-css-previewer">
+						<div id="classful-css-demo-object"></div>
+					</div>
+				</div>
+				<div class="display-inline-block font-size-14 vertical-align-top width-50% min-width-400">
+					<textarea class="width-100% padding-4px vertical-align-top resize-none min-height-100" name="classful-css">height-40 background-orange</textarea>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -52,3 +52,55 @@ $(document).ready(function () {
 		}
 	});
 });
+
+jQuery.fn.extend({
+  classful: function (classes) {
+        $(this).each(function () {
+		// If the object has a class attribute value
+		if (classes) {
+			classes = classes.toLowerCase();
+			classes = classes.split(" ");
+			// loop the classes attached to the HTML object
+			for (let i = 0; i <= classes.length - 1; i++) {
+				if (classes[i].split("-").length === 3) {
+					// split the class into css property and its value
+					var styleName = classes[i].slice(0, classes[i].lastIndexOf("-"));
+					var styleAttribute = classes[i].slice( classes[i].lastIndexOf("-") + 1, classes[i].length );
+					// if the obtained styleName represents a known css property value
+					if (cssProperties.filter(x => x.match(styleName))) {
+						// since the styleAttribute isn't kebab-cased, check if it is a number
+						if (/^\d+$/.test(styleAttribute)) {
+							styleAttribute += "px";
+						}
+						console.log(classes[i], styleName, styleAttribute);
+						$(this).css(styleName, styleAttribute);
+					}
+				} else if(classes[i].split("-").length === 4) {
+					// split the class into css property and its value
+					var styleAttribute = classes[i].split("-");
+					styleAttribute = styleAttribute[ styleAttribute.length - 2 ] + "-" + styleAttribute[ styleAttribute.length - 1 ];
+					var styleName = classes[i].split("-" + styleAttribute)[0];
+					// if the obtained styleName represents a known css property value
+					if (cssProperties.filter(x => x.match(styleName))) {
+						// console.log(classes[i], styleName, styleAttribute);
+						$(this).css(styleName, styleAttribute);
+					}
+				} else {
+					// split the class into css property and its value
+					var styleName = classes[i].slice(0, classes[i].lastIndexOf("-"));
+					var styleAttribute = classes[i].slice( classes[i].lastIndexOf("-") + 1, classes[i].length );
+					// if the obtained styleName represents a known css property value
+					if (cssProperties.filter(x => x.match(styleName))) {
+						// since the styleAttribute isn't kebab-cased, check if it is a number
+						if (/^\d+$/.test(styleAttribute)) {
+							styleAttribute += "px";
+						}
+						// console.log(classes[i], styleName, styleAttribute);
+						$(this).css(styleName, styleAttribute);
+					}
+				}
+			}
+		}
+	});
+    }
+});
